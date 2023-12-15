@@ -13,8 +13,10 @@ class Role(models.Model):
     job_title = models.CharField(max_length=100)
     salary = models.IntegerField(default=0)
     job_notes = models.TextField(null=True)
+    company = models.ForeignKey("Company", on_delete=models.CASCADE)
 
 
 class Interview(models.Model):
     interview_date = models.DateTimeField()
     interview_notes = models.TextField()
+    role = models.ForeignKey("Role", on_delete=models.CASCADE)
