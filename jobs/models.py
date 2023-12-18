@@ -8,15 +8,17 @@ class Company(models.Model):
     url = models.CharField(null=True, blank=True, max_length=200)
     notes = models.TextField(null=True, blank=True)
 
+    
+
 
 class Role(models.Model):
     job_title = models.CharField(max_length=100)
     salary = models.IntegerField(default=0)
     job_notes = models.TextField(null=True, blank=True)
-    company = models.ForeignKey("Company", on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
 
 
 class Interview(models.Model):
     interview_date = models.DateTimeField()
     interview_notes = models.TextField(blank=True)
-    role = models.ForeignKey("Role", on_delete=models.CASCADE)
+    role = models.ForeignKey(Role, on_delete=models.CASCADE)
