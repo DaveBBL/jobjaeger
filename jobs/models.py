@@ -9,6 +9,9 @@ class Company(models.Model):
     url = models.CharField(null=True, blank=True, max_length=200)
     notes = models.TextField(null=True, blank=True)
 
+    def __str__(self) -> str:
+        return self.company_name
+
 
 class Role(models.Model):
     job_title = models.CharField(max_length=100)
@@ -17,13 +20,10 @@ class Role(models.Model):
     responsibilities = models.TextField(null=True, blank=True)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
 
-
-class Application(models.Model):
-    apply_date = models.DateField(default=Now())
-    apply_notes = models.TextField(null=True)
-    role = models.ForeignKey(Role, on_delete=models.CASCADE)
-    # contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
-
+    def __str__(self) -> str:
+        job_company = f"{self.job_title}, {self.company}"
+        return job_company
+    
 
 class Contact(models.Model):
     contact_name = models.CharField(max_length=100)
@@ -31,6 +31,13 @@ class Contact(models.Model):
     contact_email = models.EmailField(null=True)
     contact_phone = models.IntegerField(default=0)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
+
+
+class Application(models.Model):
+    apply_date = models.DateField(default=Now())
+    apply_notes = models.TextField(null=True)
+    role = models.ForeignKey(Role, on_delete=models.CASCADE)
+    contact = models.ForeignKey(Contact, null=True, on_delete=models.CASCADE)
 
 
 class Interview(models.Model):
